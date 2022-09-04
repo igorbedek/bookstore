@@ -1,0 +1,585 @@
+﻿<Schema Namespace="Rhetos" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+    <Function Name="StringEqualsCaseInsensitive" ReturnType="Edm.Boolean">
+    <Parameter Name="a" Type="Edm.String" />
+    <Parameter Name="b" Type="Edm.String" />
+    <DefiningExpression>a = b</DefiningExpression>
+  </Function>
+  <Function Name="StringNotEqualsCaseInsensitive" ReturnType="Edm.Boolean">
+    <Parameter Name="a" Type="Edm.String" />
+    <Parameter Name="b" Type="Edm.String" />
+    <DefiningExpression>a != b</DefiningExpression>
+  </Function>
+  <Function Name="StringIsLessThen" ReturnType="Edm.Boolean">
+    <Parameter Name="a" Type="Edm.String" />
+    <Parameter Name="b" Type="Edm.String" />
+    <DefiningExpression>a &lt; b</DefiningExpression>
+  </Function>
+  <Function Name="StringIsLessThenOrEqual" ReturnType="Edm.Boolean">
+    <Parameter Name="a" Type="Edm.String" />
+    <Parameter Name="b" Type="Edm.String" />
+    <DefiningExpression>a &lt;= b</DefiningExpression>
+  </Function>
+  <Function Name="StringIsGreaterThen" ReturnType="Edm.Boolean">
+    <Parameter Name="a" Type="Edm.String" />
+    <Parameter Name="b" Type="Edm.String" />
+    <DefiningExpression>a &gt; b</DefiningExpression>
+  </Function>
+  <Function Name="StringIsGreaterThenOrEqual" ReturnType="Edm.Boolean">
+    <Parameter Name="a" Type="Edm.String" />
+    <Parameter Name="b" Type="Edm.String" />
+    <DefiningExpression>a &gt;= b</DefiningExpression>
+  </Function>
+  <Function Name="IntStartsWith" ReturnType="Edm.Boolean">
+    <Parameter Name="a" Type="Edm.Int32" />
+    <Parameter Name="b" Type="Edm.String" />
+    <DefiningExpression>CAST(a as Edm.String) LIKE b + '%'</DefiningExpression>
+  </Function>
+  <Function Name="StringStartsWithCaseInsensitive" ReturnType="Edm.Boolean">
+    <Parameter Name="a" Type="Edm.String" />
+    <Parameter Name="b" Type="Edm.String" />
+    <DefiningExpression>a LIKE b + '%'</DefiningExpression>
+  </Function>
+  <Function Name="StringEndsWithCaseInsensitive" ReturnType="Edm.Boolean">
+    <Parameter Name="a" Type="Edm.String" />
+    <Parameter Name="b" Type="Edm.String" />
+    <DefiningExpression>a LIKE '%' + b</DefiningExpression>
+  </Function>
+  <Function Name="StringContainsCaseInsensitive" ReturnType="Edm.Boolean">
+    <Parameter Name="a" Type="Edm.String" />
+    <Parameter Name="b" Type="Edm.String" />
+    <DefiningExpression>a LIKE '%' + b + '%'</DefiningExpression>
+  </Function>
+  <Function Name="StringLike" ReturnType="Edm.Boolean">
+    <Parameter Name="text" Type="Edm.String" />
+    <Parameter Name="pattern" Type="Edm.String" />
+    <DefiningExpression>text LIKE pattern</DefiningExpression>
+  </Function>
+  <Function Name="IntCastToString" ReturnType="Edm.String">
+    <Parameter Name="a" Type="Edm.Int32" />
+    <DefiningExpression>CAST(a as Edm.String)</DefiningExpression>
+  </Function>
+  <Function Name="GuidIsGreaterThan" ReturnType="Edm.Boolean">
+    <Parameter Name="a" Type="Edm.Guid" />
+    <Parameter Name="b" Type="Edm.Guid" />
+    <DefiningExpression>a &gt; b</DefiningExpression>
+  </Function>
+  <Function Name="GuidIsGreaterThanOrEqual" ReturnType="Edm.Boolean">
+    <Parameter Name="a" Type="Edm.Guid" />
+    <Parameter Name="b" Type="Edm.Guid" />
+    <DefiningExpression>a &gt;= b</DefiningExpression>
+  </Function>
+  <Function Name="GuidIsLessThan" ReturnType="Edm.Boolean">
+    <Parameter Name="a" Type="Edm.Guid" />
+    <Parameter Name="b" Type="Edm.Guid" />
+    <DefiningExpression>a &lt; b</DefiningExpression>
+  </Function>
+  <Function Name="GuidIsLessThanOrEqual" ReturnType="Edm.Boolean">
+    <Parameter Name="a" Type="Edm.Guid" />
+    <Parameter Name="b" Type="Edm.Guid" />
+    <DefiningExpression>a &lt;= b</DefiningExpression>
+  </Function>
+
+  <EntityType Name="Bookstore_Book" customannotation:ClrType="Common.Queryable.Bookstore_Book, Bookstore.Service">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="Code" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="NumberOfPages" Type="Int32" />
+    <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="AuthorID" Type="Guid" />
+    <NavigationProperty Name="Extension_ChildrensBook" Relationship="Self.Bookstore_ChildrensBook_Base" FromRole="Bookstore_ChildrensBook_Base_Target" ToRole="Bookstore_ChildrensBook_Base_Source" />
+    <NavigationProperty Name="Extension_ForeignBook" Relationship="Self.Bookstore_ForeignBook_Base" FromRole="Bookstore_ForeignBook_Base_Target" ToRole="Bookstore_ForeignBook_Base_Source" />
+    <NavigationProperty Name="Author" Relationship="Self.Bookstore_Book_Author" FromRole="Bookstore_Book_Author_Source" ToRole="Bookstore_Book_Author_Target" />
+  </EntityType>
+  <EntityType Name="Bookstore_ChildrensBook" customannotation:ClrType="Common.Queryable.Bookstore_ChildrensBook, Bookstore.Service">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="AgeFrom" Type="Int32" />
+    <Property Name="AgeTo" Type="Int32" />
+    <NavigationProperty Name="Base" Relationship="Self.Bookstore_ChildrensBook_Base" FromRole="Bookstore_ChildrensBook_Base_Source" ToRole="Bookstore_ChildrensBook_Base_Target" />
+  </EntityType>
+  <EntityType Name="Bookstore_Comment" customannotation:ClrType="Common.Queryable.Bookstore_Comment, Bookstore.Service">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="BookID" Type="Guid" />
+    <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Book" Relationship="Self.Bookstore_Comment_Book" FromRole="Bookstore_Comment_Book_Source" ToRole="Bookstore_Comment_Book_Target" />
+  </EntityType>
+  <EntityType Name="Bookstore_ForeignBook" customannotation:ClrType="Common.Queryable.Bookstore_ForeignBook, Bookstore.Service">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="OriginalLanguage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="TranslatorID" Type="Guid" />
+    <NavigationProperty Name="Base" Relationship="Self.Bookstore_ForeignBook_Base" FromRole="Bookstore_ForeignBook_Base_Source" ToRole="Bookstore_ForeignBook_Base_Target" />
+    <NavigationProperty Name="Translator" Relationship="Self.Bookstore_ForeignBook_Translator" FromRole="Bookstore_ForeignBook_Translator_Source" ToRole="Bookstore_ForeignBook_Translator_Target" />
+  </EntityType>
+  <EntityType Name="Bookstore_Person" customannotation:ClrType="Common.Queryable.Bookstore_Person, Bookstore.Service">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Common_AutoCodeCache" customannotation:ClrType="Common.Queryable.Common_AutoCodeCache, Bookstore.Service">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="Entity" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Grouping" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="LastCode" Type="Int32" />
+    <Property Name="MinDigits" Type="Int32" />
+    <Property Name="Prefix" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Property" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Common_Claim" customannotation:ClrType="Common.Queryable.Common_Claim, Bookstore.Service">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="Active" Type="Boolean" />
+    <Property Name="ClaimResource" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ClaimRight" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Common_ExclusiveLock" customannotation:ClrType="Common.Queryable.Common_ExclusiveLock, Bookstore.Service">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="LockFinish" Type="DateTime" />
+    <Property Name="LockStart" Type="DateTime" />
+    <Property Name="ResourceID" Type="Guid" />
+    <Property Name="ResourceType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="UserName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Workstation" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Common_FilterId" customannotation:ClrType="Common.Queryable.Common_FilterId, Bookstore.Service">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="Handle" Type="Guid" />
+    <Property Name="Value" Type="Guid" />
+  </EntityType>
+  <EntityType Name="Common_KeepSynchronizedMetadata" customannotation:ClrType="Common.Queryable.Common_KeepSynchronizedMetadata, Bookstore.Service">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="Context" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Source" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Target" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Common_Log" customannotation:ClrType="Common.Queryable.Common_Log, Bookstore.Service">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="Action" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ContextInfo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Created" Type="DateTime" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ItemId" Type="Guid" />
+    <Property Name="TableName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="UserName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Workstation" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Common_LogReader" customannotation:ClrType="Common.Queryable.Common_LogReader, Bookstore.Service">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="Action" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ContextInfo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Created" Type="DateTime" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ItemId" Type="Guid" />
+    <Property Name="TableName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="UserName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Workstation" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Common_LogRelatedItem" customannotation:ClrType="Common.Queryable.Common_LogRelatedItem, Bookstore.Service">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="ItemId" Type="Guid" />
+    <Property Name="LogID" Type="Guid" />
+    <Property Name="Relation" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="TableName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Log" Relationship="Self.Common_LogRelatedItem_Log" FromRole="Common_LogRelatedItem_Log_Source" ToRole="Common_LogRelatedItem_Log_Target" />
+  </EntityType>
+  <EntityType Name="Common_LogRelatedItemReader" customannotation:ClrType="Common.Queryable.Common_LogRelatedItemReader, Bookstore.Service">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="ItemId" Type="Guid" />
+    <Property Name="LogID" Type="Guid" />
+    <Property Name="Relation" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="TableName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Log" Relationship="Self.Common_LogRelatedItemReader_Log" FromRole="Common_LogRelatedItemReader_Log_Source" ToRole="Common_LogRelatedItemReader_Log_Target" />
+  </EntityType>
+  <EntityType Name="Common_Principal" customannotation:ClrType="Common.Queryable.Common_Principal, Bookstore.Service">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Common_PrincipalHasRole" customannotation:ClrType="Common.Queryable.Common_PrincipalHasRole, Bookstore.Service">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="PrincipalID" Type="Guid" />
+    <Property Name="RoleID" Type="Guid" />
+    <NavigationProperty Name="Principal" Relationship="Self.Common_PrincipalHasRole_Principal" FromRole="Common_PrincipalHasRole_Principal_Source" ToRole="Common_PrincipalHasRole_Principal_Target" />
+    <NavigationProperty Name="Role" Relationship="Self.Common_PrincipalHasRole_Role" FromRole="Common_PrincipalHasRole_Role_Source" ToRole="Common_PrincipalHasRole_Role_Target" />
+  </EntityType>
+  <EntityType Name="Common_PrincipalPermission" customannotation:ClrType="Common.Queryable.Common_PrincipalPermission, Bookstore.Service">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="ClaimID" Type="Guid" />
+    <Property Name="IsAuthorized" Type="Boolean" />
+    <Property Name="PrincipalID" Type="Guid" />
+    <NavigationProperty Name="Claim" Relationship="Self.Common_PrincipalPermission_Claim" FromRole="Common_PrincipalPermission_Claim_Source" ToRole="Common_PrincipalPermission_Claim_Target" />
+    <NavigationProperty Name="Principal" Relationship="Self.Common_PrincipalPermission_Principal" FromRole="Common_PrincipalPermission_Principal_Source" ToRole="Common_PrincipalPermission_Principal_Target" />
+  </EntityType>
+  <EntityType Name="Common_RelatedEventsSource" customannotation:ClrType="Common.Queryable.Common_RelatedEventsSource, Bookstore.Service">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="Action" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ContextInfo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Created" Type="DateTime" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ItemId" Type="Guid" />
+    <Property Name="LogID" Type="Guid" />
+    <Property Name="RelatedToItem" Type="Guid" />
+    <Property Name="RelatedToTable" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Relation" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="TableName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="UserName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Workstation" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Log" Relationship="Self.Common_RelatedEventsSource_Log" FromRole="Common_RelatedEventsSource_Log_Source" ToRole="Common_RelatedEventsSource_Log_Target" />
+  </EntityType>
+  <EntityType Name="Common_Role" customannotation:ClrType="Common.Queryable.Common_Role, Bookstore.Service">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Common_RoleInheritsRole" customannotation:ClrType="Common.Queryable.Common_RoleInheritsRole, Bookstore.Service">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="PermissionsFromID" Type="Guid" />
+    <Property Name="UsersFromID" Type="Guid" />
+    <NavigationProperty Name="PermissionsFrom" Relationship="Self.Common_RoleInheritsRole_PermissionsFrom" FromRole="Common_RoleInheritsRole_PermissionsFrom_Source" ToRole="Common_RoleInheritsRole_PermissionsFrom_Target" />
+    <NavigationProperty Name="UsersFrom" Relationship="Self.Common_RoleInheritsRole_UsersFrom" FromRole="Common_RoleInheritsRole_UsersFrom_Source" ToRole="Common_RoleInheritsRole_UsersFrom_Target" />
+  </EntityType>
+  <EntityType Name="Common_RolePermission" customannotation:ClrType="Common.Queryable.Common_RolePermission, Bookstore.Service">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Guid" Nullable="false" />
+    <Property Name="ClaimID" Type="Guid" />
+    <Property Name="IsAuthorized" Type="Boolean" />
+    <Property Name="RoleID" Type="Guid" />
+    <NavigationProperty Name="Claim" Relationship="Self.Common_RolePermission_Claim" FromRole="Common_RolePermission_Claim_Source" ToRole="Common_RolePermission_Claim_Target" />
+    <NavigationProperty Name="Role" Relationship="Self.Common_RolePermission_Role" FromRole="Common_RolePermission_Role_Source" ToRole="Common_RolePermission_Role_Target" />
+  </EntityType>
+  <Association Name="Bookstore_ChildrensBook_Base">
+    <End Role="Bookstore_ChildrensBook_Base_Source" Type="Self.Bookstore_ChildrensBook" Multiplicity="0..1" />
+    <End Role="Bookstore_ChildrensBook_Base_Target" Type="Self.Bookstore_Book" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Bookstore_ChildrensBook_Base_Target">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Bookstore_ChildrensBook_Base_Source">
+        <PropertyRef Name="ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Bookstore_Comment_Book">
+    <End Role="Bookstore_Comment_Book_Source" Type="Self.Bookstore_Comment" Multiplicity="*" />
+    <End Role="Bookstore_Comment_Book_Target" Type="Self.Bookstore_Book" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Bookstore_Comment_Book_Target">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Bookstore_Comment_Book_Source">
+        <PropertyRef Name="BookID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Bookstore_ForeignBook_Base">
+    <End Role="Bookstore_ForeignBook_Base_Source" Type="Self.Bookstore_ForeignBook" Multiplicity="0..1" />
+    <End Role="Bookstore_ForeignBook_Base_Target" Type="Self.Bookstore_Book" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Bookstore_ForeignBook_Base_Target">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Bookstore_ForeignBook_Base_Source">
+        <PropertyRef Name="ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Bookstore_Book_Author">
+    <End Role="Bookstore_Book_Author_Source" Type="Self.Bookstore_Book" Multiplicity="*" />
+    <End Role="Bookstore_Book_Author_Target" Type="Self.Bookstore_Person" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Bookstore_Book_Author_Target">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Bookstore_Book_Author_Source">
+        <PropertyRef Name="AuthorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Bookstore_ForeignBook_Translator">
+    <End Role="Bookstore_ForeignBook_Translator_Source" Type="Self.Bookstore_ForeignBook" Multiplicity="*" />
+    <End Role="Bookstore_ForeignBook_Translator_Target" Type="Self.Bookstore_Person" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Bookstore_ForeignBook_Translator_Target">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Bookstore_ForeignBook_Translator_Source">
+        <PropertyRef Name="TranslatorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Common_LogRelatedItem_Log">
+    <End Role="Common_LogRelatedItem_Log_Source" Type="Self.Common_LogRelatedItem" Multiplicity="*" />
+    <End Role="Common_LogRelatedItem_Log_Target" Type="Self.Common_Log" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Common_LogRelatedItem_Log_Target">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Common_LogRelatedItem_Log_Source">
+        <PropertyRef Name="LogID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Common_LogRelatedItemReader_Log">
+    <End Role="Common_LogRelatedItemReader_Log_Source" Type="Self.Common_LogRelatedItemReader" Multiplicity="*" />
+    <End Role="Common_LogRelatedItemReader_Log_Target" Type="Self.Common_Log" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Common_LogRelatedItemReader_Log_Target">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Common_LogRelatedItemReader_Log_Source">
+        <PropertyRef Name="LogID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Common_PrincipalHasRole_Principal">
+    <End Role="Common_PrincipalHasRole_Principal_Source" Type="Self.Common_PrincipalHasRole" Multiplicity="*" />
+    <End Role="Common_PrincipalHasRole_Principal_Target" Type="Self.Common_Principal" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Common_PrincipalHasRole_Principal_Target">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Common_PrincipalHasRole_Principal_Source">
+        <PropertyRef Name="PrincipalID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Common_PrincipalPermission_Claim">
+    <End Role="Common_PrincipalPermission_Claim_Source" Type="Self.Common_PrincipalPermission" Multiplicity="*" />
+    <End Role="Common_PrincipalPermission_Claim_Target" Type="Self.Common_Claim" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Common_PrincipalPermission_Claim_Target">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Common_PrincipalPermission_Claim_Source">
+        <PropertyRef Name="ClaimID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Common_PrincipalPermission_Principal">
+    <End Role="Common_PrincipalPermission_Principal_Source" Type="Self.Common_PrincipalPermission" Multiplicity="*" />
+    <End Role="Common_PrincipalPermission_Principal_Target" Type="Self.Common_Principal" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Common_PrincipalPermission_Principal_Target">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Common_PrincipalPermission_Principal_Source">
+        <PropertyRef Name="PrincipalID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Common_RelatedEventsSource_Log">
+    <End Role="Common_RelatedEventsSource_Log_Source" Type="Self.Common_RelatedEventsSource" Multiplicity="*" />
+    <End Role="Common_RelatedEventsSource_Log_Target" Type="Self.Common_LogReader" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Common_RelatedEventsSource_Log_Target">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Common_RelatedEventsSource_Log_Source">
+        <PropertyRef Name="LogID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Common_PrincipalHasRole_Role">
+    <End Role="Common_PrincipalHasRole_Role_Source" Type="Self.Common_PrincipalHasRole" Multiplicity="*" />
+    <End Role="Common_PrincipalHasRole_Role_Target" Type="Self.Common_Role" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Common_PrincipalHasRole_Role_Target">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Common_PrincipalHasRole_Role_Source">
+        <PropertyRef Name="RoleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Common_RoleInheritsRole_PermissionsFrom">
+    <End Role="Common_RoleInheritsRole_PermissionsFrom_Source" Type="Self.Common_RoleInheritsRole" Multiplicity="*" />
+    <End Role="Common_RoleInheritsRole_PermissionsFrom_Target" Type="Self.Common_Role" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Common_RoleInheritsRole_PermissionsFrom_Target">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Common_RoleInheritsRole_PermissionsFrom_Source">
+        <PropertyRef Name="PermissionsFromID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Common_RoleInheritsRole_UsersFrom">
+    <End Role="Common_RoleInheritsRole_UsersFrom_Source" Type="Self.Common_RoleInheritsRole" Multiplicity="*" />
+    <End Role="Common_RoleInheritsRole_UsersFrom_Target" Type="Self.Common_Role" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Common_RoleInheritsRole_UsersFrom_Target">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Common_RoleInheritsRole_UsersFrom_Source">
+        <PropertyRef Name="UsersFromID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Common_RolePermission_Claim">
+    <End Role="Common_RolePermission_Claim_Source" Type="Self.Common_RolePermission" Multiplicity="*" />
+    <End Role="Common_RolePermission_Claim_Target" Type="Self.Common_Claim" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Common_RolePermission_Claim_Target">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Common_RolePermission_Claim_Source">
+        <PropertyRef Name="ClaimID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Common_RolePermission_Role">
+    <End Role="Common_RolePermission_Role_Source" Type="Self.Common_RolePermission" Multiplicity="*" />
+    <End Role="Common_RolePermission_Role_Target" Type="Self.Common_Role" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Common_RolePermission_Role_Target">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Common_RolePermission_Role_Source">
+        <PropertyRef Name="RoleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="EntityFrameworkContext" customannotation:UseClrTypes="true">
+    
+    <EntitySet Name="Bookstore_Book" EntityType="Self.Bookstore_Book" />
+    <EntitySet Name="Bookstore_ChildrensBook" EntityType="Self.Bookstore_ChildrensBook" />
+    <EntitySet Name="Bookstore_Comment" EntityType="Self.Bookstore_Comment" />
+    <EntitySet Name="Bookstore_ForeignBook" EntityType="Self.Bookstore_ForeignBook" />
+    <EntitySet Name="Bookstore_Person" EntityType="Self.Bookstore_Person" />
+    <EntitySet Name="Common_AutoCodeCache" EntityType="Self.Common_AutoCodeCache" />
+    <EntitySet Name="Common_Claim" EntityType="Self.Common_Claim" />
+    <EntitySet Name="Common_ExclusiveLock" EntityType="Self.Common_ExclusiveLock" />
+    <EntitySet Name="Common_FilterId" EntityType="Self.Common_FilterId" />
+    <EntitySet Name="Common_KeepSynchronizedMetadata" EntityType="Self.Common_KeepSynchronizedMetadata" />
+    <EntitySet Name="Common_Log" EntityType="Self.Common_Log" />
+    <EntitySet Name="Common_LogReader" EntityType="Self.Common_LogReader" />
+    <EntitySet Name="Common_LogRelatedItem" EntityType="Self.Common_LogRelatedItem" />
+    <EntitySet Name="Common_LogRelatedItemReader" EntityType="Self.Common_LogRelatedItemReader" />
+    <EntitySet Name="Common_Principal" EntityType="Self.Common_Principal" />
+    <EntitySet Name="Common_PrincipalHasRole" EntityType="Self.Common_PrincipalHasRole" />
+    <EntitySet Name="Common_PrincipalPermission" EntityType="Self.Common_PrincipalPermission" />
+    <EntitySet Name="Common_RelatedEventsSource" EntityType="Self.Common_RelatedEventsSource" />
+    <EntitySet Name="Common_Role" EntityType="Self.Common_Role" />
+    <EntitySet Name="Common_RoleInheritsRole" EntityType="Self.Common_RoleInheritsRole" />
+    <EntitySet Name="Common_RolePermission" EntityType="Self.Common_RolePermission" />
+	<AssociationSet Name="Bookstore_ChildrensBook_Base" Association="Self.Bookstore_ChildrensBook_Base">
+		<End Role="Bookstore_ChildrensBook_Base_Source" EntitySet="Bookstore_ChildrensBook" />
+		<End Role="Bookstore_ChildrensBook_Base_Target" EntitySet="Bookstore_Book" />
+	</AssociationSet>
+	<AssociationSet Name="Bookstore_Comment_Book" Association="Self.Bookstore_Comment_Book">
+		<End Role="Bookstore_Comment_Book_Source" EntitySet="Bookstore_Comment" />
+		<End Role="Bookstore_Comment_Book_Target" EntitySet="Bookstore_Book" />
+	</AssociationSet>
+	<AssociationSet Name="Bookstore_ForeignBook_Base" Association="Self.Bookstore_ForeignBook_Base">
+		<End Role="Bookstore_ForeignBook_Base_Source" EntitySet="Bookstore_ForeignBook" />
+		<End Role="Bookstore_ForeignBook_Base_Target" EntitySet="Bookstore_Book" />
+	</AssociationSet>
+	<AssociationSet Name="Bookstore_Book_Author" Association="Self.Bookstore_Book_Author">
+		<End Role="Bookstore_Book_Author_Source" EntitySet="Bookstore_Book" />
+		<End Role="Bookstore_Book_Author_Target" EntitySet="Bookstore_Person" />
+	</AssociationSet>
+	<AssociationSet Name="Bookstore_ForeignBook_Translator" Association="Self.Bookstore_ForeignBook_Translator">
+		<End Role="Bookstore_ForeignBook_Translator_Source" EntitySet="Bookstore_ForeignBook" />
+		<End Role="Bookstore_ForeignBook_Translator_Target" EntitySet="Bookstore_Person" />
+	</AssociationSet>
+	<AssociationSet Name="Common_LogRelatedItem_Log" Association="Self.Common_LogRelatedItem_Log">
+		<End Role="Common_LogRelatedItem_Log_Source" EntitySet="Common_LogRelatedItem" />
+		<End Role="Common_LogRelatedItem_Log_Target" EntitySet="Common_Log" />
+	</AssociationSet>
+	<AssociationSet Name="Common_LogRelatedItemReader_Log" Association="Self.Common_LogRelatedItemReader_Log">
+		<End Role="Common_LogRelatedItemReader_Log_Source" EntitySet="Common_LogRelatedItemReader" />
+		<End Role="Common_LogRelatedItemReader_Log_Target" EntitySet="Common_Log" />
+	</AssociationSet>
+	<AssociationSet Name="Common_PrincipalHasRole_Principal" Association="Self.Common_PrincipalHasRole_Principal">
+		<End Role="Common_PrincipalHasRole_Principal_Source" EntitySet="Common_PrincipalHasRole" />
+		<End Role="Common_PrincipalHasRole_Principal_Target" EntitySet="Common_Principal" />
+	</AssociationSet>
+	<AssociationSet Name="Common_PrincipalPermission_Claim" Association="Self.Common_PrincipalPermission_Claim">
+		<End Role="Common_PrincipalPermission_Claim_Source" EntitySet="Common_PrincipalPermission" />
+		<End Role="Common_PrincipalPermission_Claim_Target" EntitySet="Common_Claim" />
+	</AssociationSet>
+	<AssociationSet Name="Common_PrincipalPermission_Principal" Association="Self.Common_PrincipalPermission_Principal">
+		<End Role="Common_PrincipalPermission_Principal_Source" EntitySet="Common_PrincipalPermission" />
+		<End Role="Common_PrincipalPermission_Principal_Target" EntitySet="Common_Principal" />
+	</AssociationSet>
+	<AssociationSet Name="Common_RelatedEventsSource_Log" Association="Self.Common_RelatedEventsSource_Log">
+		<End Role="Common_RelatedEventsSource_Log_Source" EntitySet="Common_RelatedEventsSource" />
+		<End Role="Common_RelatedEventsSource_Log_Target" EntitySet="Common_LogReader" />
+	</AssociationSet>
+	<AssociationSet Name="Common_PrincipalHasRole_Role" Association="Self.Common_PrincipalHasRole_Role">
+		<End Role="Common_PrincipalHasRole_Role_Source" EntitySet="Common_PrincipalHasRole" />
+		<End Role="Common_PrincipalHasRole_Role_Target" EntitySet="Common_Role" />
+	</AssociationSet>
+	<AssociationSet Name="Common_RoleInheritsRole_PermissionsFrom" Association="Self.Common_RoleInheritsRole_PermissionsFrom">
+		<End Role="Common_RoleInheritsRole_PermissionsFrom_Source" EntitySet="Common_RoleInheritsRole" />
+		<End Role="Common_RoleInheritsRole_PermissionsFrom_Target" EntitySet="Common_Role" />
+	</AssociationSet>
+	<AssociationSet Name="Common_RoleInheritsRole_UsersFrom" Association="Self.Common_RoleInheritsRole_UsersFrom">
+		<End Role="Common_RoleInheritsRole_UsersFrom_Source" EntitySet="Common_RoleInheritsRole" />
+		<End Role="Common_RoleInheritsRole_UsersFrom_Target" EntitySet="Common_Role" />
+	</AssociationSet>
+	<AssociationSet Name="Common_RolePermission_Claim" Association="Self.Common_RolePermission_Claim">
+		<End Role="Common_RolePermission_Claim_Source" EntitySet="Common_RolePermission" />
+		<End Role="Common_RolePermission_Claim_Target" EntitySet="Common_Claim" />
+	</AssociationSet>
+	<AssociationSet Name="Common_RolePermission_Role" Association="Self.Common_RolePermission_Role">
+		<End Role="Common_RolePermission_Role_Source" EntitySet="Common_RolePermission" />
+		<End Role="Common_RolePermission_Role_Target" EntitySet="Common_Role" />
+	</AssociationSet>
+  </EntityContainer>
+</Schema>

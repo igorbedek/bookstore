@@ -1,0 +1,231 @@
+﻿<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="CodeFirstDatabase" CdmEntityContainer="EntityFrameworkContext">
+    
+  <EntitySetMapping Name="Bookstore_Book">
+    <EntityTypeMapping TypeName="Rhetos.Bookstore_Book">
+      <MappingFragment StoreEntitySet="Bookstore_Book">
+        <ScalarProperty Name="ID" ColumnName="ID" />
+        <ScalarProperty Name="Code" ColumnName="Code" />
+        <ScalarProperty Name="NumberOfPages" ColumnName="NumberOfPages" />
+        <ScalarProperty Name="Title" ColumnName="Title" />
+        <ScalarProperty Name="AuthorID" ColumnName="AuthorID" />
+      </MappingFragment>
+    </EntityTypeMapping>
+  </EntitySetMapping>
+  <EntitySetMapping Name="Bookstore_ChildrensBook">
+    <EntityTypeMapping TypeName="Rhetos.Bookstore_ChildrensBook">
+      <MappingFragment StoreEntitySet="Bookstore_ChildrensBook">
+        <ScalarProperty Name="ID" ColumnName="ID" />
+        <ScalarProperty Name="AgeFrom" ColumnName="AgeFrom" />
+        <ScalarProperty Name="AgeTo" ColumnName="AgeTo" />
+      </MappingFragment>
+    </EntityTypeMapping>
+  </EntitySetMapping>
+  <EntitySetMapping Name="Bookstore_Comment">
+    <EntityTypeMapping TypeName="Rhetos.Bookstore_Comment">
+      <MappingFragment StoreEntitySet="Bookstore_Comment">
+        <ScalarProperty Name="ID" ColumnName="ID" />
+        <ScalarProperty Name="BookID" ColumnName="BookID" />
+        <ScalarProperty Name="Text" ColumnName="Text" />
+      </MappingFragment>
+    </EntityTypeMapping>
+  </EntitySetMapping>
+  <EntitySetMapping Name="Bookstore_ForeignBook">
+    <EntityTypeMapping TypeName="Rhetos.Bookstore_ForeignBook">
+      <MappingFragment StoreEntitySet="Bookstore_ForeignBook">
+        <ScalarProperty Name="ID" ColumnName="ID" />
+        <ScalarProperty Name="OriginalLanguage" ColumnName="OriginalLanguage" />
+        <ScalarProperty Name="TranslatorID" ColumnName="TranslatorID" />
+      </MappingFragment>
+    </EntityTypeMapping>
+  </EntitySetMapping>
+  <EntitySetMapping Name="Bookstore_Person">
+    <EntityTypeMapping TypeName="Rhetos.Bookstore_Person">
+      <MappingFragment StoreEntitySet="Bookstore_Person">
+        <ScalarProperty Name="ID" ColumnName="ID" />
+        <ScalarProperty Name="Name" ColumnName="Name" />
+      </MappingFragment>
+    </EntityTypeMapping>
+  </EntitySetMapping>
+  <EntitySetMapping Name="Common_AutoCodeCache">
+    <EntityTypeMapping TypeName="Rhetos.Common_AutoCodeCache">
+      <MappingFragment StoreEntitySet="Common_AutoCodeCache">
+        <ScalarProperty Name="ID" ColumnName="ID" />
+        <ScalarProperty Name="Entity" ColumnName="Entity" />
+        <ScalarProperty Name="Grouping" ColumnName="Grouping" />
+        <ScalarProperty Name="LastCode" ColumnName="LastCode" />
+        <ScalarProperty Name="MinDigits" ColumnName="MinDigits" />
+        <ScalarProperty Name="Prefix" ColumnName="Prefix" />
+        <ScalarProperty Name="Property" ColumnName="Property" />
+      </MappingFragment>
+    </EntityTypeMapping>
+  </EntitySetMapping>
+  <EntitySetMapping Name="Common_Claim">
+    <EntityTypeMapping TypeName="Rhetos.Common_Claim">
+      <MappingFragment StoreEntitySet="Common_Claim">
+        <ScalarProperty Name="ID" ColumnName="ID" />
+        <ScalarProperty Name="Active" ColumnName="Active" />
+        <ScalarProperty Name="ClaimResource" ColumnName="ClaimResource" />
+        <ScalarProperty Name="ClaimRight" ColumnName="ClaimRight" />
+      </MappingFragment>
+    </EntityTypeMapping>
+  </EntitySetMapping>
+  <EntitySetMapping Name="Common_ExclusiveLock">
+    <EntityTypeMapping TypeName="Rhetos.Common_ExclusiveLock">
+      <MappingFragment StoreEntitySet="Common_ExclusiveLock">
+        <ScalarProperty Name="ID" ColumnName="ID" />
+        <ScalarProperty Name="LockFinish" ColumnName="LockFinish" />
+        <ScalarProperty Name="LockStart" ColumnName="LockStart" />
+        <ScalarProperty Name="ResourceID" ColumnName="ResourceID" />
+        <ScalarProperty Name="ResourceType" ColumnName="ResourceType" />
+        <ScalarProperty Name="UserName" ColumnName="UserName" />
+        <ScalarProperty Name="Workstation" ColumnName="Workstation" />
+      </MappingFragment>
+    </EntityTypeMapping>
+  </EntitySetMapping>
+  <EntitySetMapping Name="Common_FilterId">
+    <EntityTypeMapping TypeName="Rhetos.Common_FilterId">
+      <MappingFragment StoreEntitySet="Common_FilterId">
+        <ScalarProperty Name="ID" ColumnName="ID" />
+        <ScalarProperty Name="Handle" ColumnName="Handle" />
+        <ScalarProperty Name="Value" ColumnName="Value" />
+      </MappingFragment>
+    </EntityTypeMapping>
+  </EntitySetMapping>
+  <EntitySetMapping Name="Common_KeepSynchronizedMetadata">
+    <EntityTypeMapping TypeName="Rhetos.Common_KeepSynchronizedMetadata">
+      <MappingFragment StoreEntitySet="Common_KeepSynchronizedMetadata">
+        <ScalarProperty Name="ID" ColumnName="ID" />
+        <ScalarProperty Name="Context" ColumnName="Context" />
+        <ScalarProperty Name="Source" ColumnName="Source" />
+        <ScalarProperty Name="Target" ColumnName="Target" />
+      </MappingFragment>
+    </EntityTypeMapping>
+  </EntitySetMapping>
+  <EntitySetMapping Name="Common_Log">
+    <EntityTypeMapping TypeName="Rhetos.Common_Log">
+      <MappingFragment StoreEntitySet="Common_Log">
+        <ScalarProperty Name="ID" ColumnName="ID" />
+        <ScalarProperty Name="Action" ColumnName="Action" />
+        <ScalarProperty Name="ContextInfo" ColumnName="ContextInfo" />
+        <ScalarProperty Name="Created" ColumnName="Created" />
+        <ScalarProperty Name="Description" ColumnName="Description" />
+        <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+        <ScalarProperty Name="TableName" ColumnName="TableName" />
+        <ScalarProperty Name="UserName" ColumnName="UserName" />
+        <ScalarProperty Name="Workstation" ColumnName="Workstation" />
+      </MappingFragment>
+    </EntityTypeMapping>
+  </EntitySetMapping>
+  <EntitySetMapping Name="Common_LogReader">
+    <EntityTypeMapping TypeName="Rhetos.Common_LogReader">
+      <MappingFragment StoreEntitySet="Common_LogReader">
+        <ScalarProperty Name="ID" ColumnName="ID" />
+        <ScalarProperty Name="Action" ColumnName="Action" />
+        <ScalarProperty Name="ContextInfo" ColumnName="ContextInfo" />
+        <ScalarProperty Name="Created" ColumnName="Created" />
+        <ScalarProperty Name="Description" ColumnName="Description" />
+        <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+        <ScalarProperty Name="TableName" ColumnName="TableName" />
+        <ScalarProperty Name="UserName" ColumnName="UserName" />
+        <ScalarProperty Name="Workstation" ColumnName="Workstation" />
+      </MappingFragment>
+    </EntityTypeMapping>
+  </EntitySetMapping>
+  <EntitySetMapping Name="Common_LogRelatedItem">
+    <EntityTypeMapping TypeName="Rhetos.Common_LogRelatedItem">
+      <MappingFragment StoreEntitySet="Common_LogRelatedItem">
+        <ScalarProperty Name="ID" ColumnName="ID" />
+        <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+        <ScalarProperty Name="LogID" ColumnName="LogID" />
+        <ScalarProperty Name="Relation" ColumnName="Relation" />
+        <ScalarProperty Name="TableName" ColumnName="TableName" />
+      </MappingFragment>
+    </EntityTypeMapping>
+  </EntitySetMapping>
+  <EntitySetMapping Name="Common_LogRelatedItemReader">
+    <EntityTypeMapping TypeName="Rhetos.Common_LogRelatedItemReader">
+      <MappingFragment StoreEntitySet="Common_LogRelatedItemReader">
+        <ScalarProperty Name="ID" ColumnName="ID" />
+        <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+        <ScalarProperty Name="LogID" ColumnName="LogID" />
+        <ScalarProperty Name="Relation" ColumnName="Relation" />
+        <ScalarProperty Name="TableName" ColumnName="TableName" />
+      </MappingFragment>
+    </EntityTypeMapping>
+  </EntitySetMapping>
+  <EntitySetMapping Name="Common_Principal">
+    <EntityTypeMapping TypeName="Rhetos.Common_Principal">
+      <MappingFragment StoreEntitySet="Common_Principal">
+        <ScalarProperty Name="ID" ColumnName="ID" />
+        <ScalarProperty Name="Name" ColumnName="Name" />
+      </MappingFragment>
+    </EntityTypeMapping>
+  </EntitySetMapping>
+  <EntitySetMapping Name="Common_PrincipalHasRole">
+    <EntityTypeMapping TypeName="Rhetos.Common_PrincipalHasRole">
+      <MappingFragment StoreEntitySet="Common_PrincipalHasRole">
+        <ScalarProperty Name="ID" ColumnName="ID" />
+        <ScalarProperty Name="PrincipalID" ColumnName="PrincipalID" />
+        <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+      </MappingFragment>
+    </EntityTypeMapping>
+  </EntitySetMapping>
+  <EntitySetMapping Name="Common_PrincipalPermission">
+    <EntityTypeMapping TypeName="Rhetos.Common_PrincipalPermission">
+      <MappingFragment StoreEntitySet="Common_PrincipalPermission">
+        <ScalarProperty Name="ID" ColumnName="ID" />
+        <ScalarProperty Name="ClaimID" ColumnName="ClaimID" />
+        <ScalarProperty Name="IsAuthorized" ColumnName="IsAuthorized" />
+        <ScalarProperty Name="PrincipalID" ColumnName="PrincipalID" />
+      </MappingFragment>
+    </EntityTypeMapping>
+  </EntitySetMapping>
+  <EntitySetMapping Name="Common_RelatedEventsSource">
+    <EntityTypeMapping TypeName="Rhetos.Common_RelatedEventsSource">
+      <MappingFragment StoreEntitySet="Common_RelatedEventsSource">
+        <ScalarProperty Name="ID" ColumnName="ID" />
+        <ScalarProperty Name="Action" ColumnName="Action" />
+        <ScalarProperty Name="ContextInfo" ColumnName="ContextInfo" />
+        <ScalarProperty Name="Created" ColumnName="Created" />
+        <ScalarProperty Name="Description" ColumnName="Description" />
+        <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+        <ScalarProperty Name="LogID" ColumnName="LogID" />
+        <ScalarProperty Name="RelatedToItem" ColumnName="RelatedToItem" />
+        <ScalarProperty Name="RelatedToTable" ColumnName="RelatedToTable" />
+        <ScalarProperty Name="Relation" ColumnName="Relation" />
+        <ScalarProperty Name="TableName" ColumnName="TableName" />
+        <ScalarProperty Name="UserName" ColumnName="UserName" />
+        <ScalarProperty Name="Workstation" ColumnName="Workstation" />
+      </MappingFragment>
+    </EntityTypeMapping>
+  </EntitySetMapping>
+  <EntitySetMapping Name="Common_Role">
+    <EntityTypeMapping TypeName="Rhetos.Common_Role">
+      <MappingFragment StoreEntitySet="Common_Role">
+        <ScalarProperty Name="ID" ColumnName="ID" />
+        <ScalarProperty Name="Name" ColumnName="Name" />
+      </MappingFragment>
+    </EntityTypeMapping>
+  </EntitySetMapping>
+  <EntitySetMapping Name="Common_RoleInheritsRole">
+    <EntityTypeMapping TypeName="Rhetos.Common_RoleInheritsRole">
+      <MappingFragment StoreEntitySet="Common_RoleInheritsRole">
+        <ScalarProperty Name="ID" ColumnName="ID" />
+        <ScalarProperty Name="PermissionsFromID" ColumnName="PermissionsFromID" />
+        <ScalarProperty Name="UsersFromID" ColumnName="UsersFromID" />
+      </MappingFragment>
+    </EntityTypeMapping>
+  </EntitySetMapping>
+  <EntitySetMapping Name="Common_RolePermission">
+    <EntityTypeMapping TypeName="Rhetos.Common_RolePermission">
+      <MappingFragment StoreEntitySet="Common_RolePermission">
+        <ScalarProperty Name="ID" ColumnName="ID" />
+        <ScalarProperty Name="ClaimID" ColumnName="ClaimID" />
+        <ScalarProperty Name="IsAuthorized" ColumnName="IsAuthorized" />
+        <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+      </MappingFragment>
+    </EntityTypeMapping>
+  </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
