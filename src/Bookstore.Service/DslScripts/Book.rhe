@@ -10,6 +10,7 @@
         InvalidData CommonMisspelling 'It is not allowed to enter misspelled word "curiousity".';
 
         Reference Author Bookstore.Person;
+        Reference Genre Bookstore.Genre;
 
         Logging;
     }
@@ -17,6 +18,7 @@
     Entity Person
     {
         ShortString Name;
+        Logging;
     }
 
     Entity Comment
@@ -32,6 +34,7 @@
         Integer AgeFrom;
         Integer AgeTo;
         IntegerRange AgeFrom AgeTo;
+        Logging;
     }
 
     Entity ForeignBook
@@ -40,5 +43,53 @@
 
         ShortString OriginalLanguage;
         Reference Translator Bookstore.Person;
+        Logging;
+    }
+
+    Browse BookGrid Bookstore.Book
+    {
+        Take Code;
+        Take Title;
+        Take 'Author.Name';
+        Take TranslatorName 'Extension_ForeignBook.Translator.Name';
+    }
+
+    SqlQueryable BookInfo
+    "
+        SELECT
+            b.ID,
+            NumberOfComments = COUNT(c.ID)
+        FROM
+            Bookstore.Book b
+            LEFT JOIN Bookstore.Comment c ON c.BookID = b.ID
+        GROUP BY
+            b.ID
+    "
+    {
+        Extends Bookstore.Book;
+        Integer NumberOfComments;
+
+        AutodetectSqlDependencies;
+    }
+
+    Hardcoded Genre
+    {
+        ShortString Label; // Short text displayed to user.
+        LongString Description;
+        Bool IsFiction;
+
+        Entry ScienceFiction
+        {
+            Value Label 'Science fiction';
+            Value Description 'A speculative fiction with imagined elements that are inspired by natural sciences or social sciences.';
+            Value IsFiction 1;
+        }
+
+        Entry Biography
+        {
+            Value Label 'Biography';
+            Value Description 'A written narrative of a person''s life.';
+            Value IsFiction 0;
+        }
     }
 }

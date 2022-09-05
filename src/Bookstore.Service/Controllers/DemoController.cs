@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Bookstore.Repositories;
+using Common.Queryable;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Rhetos;
 using Rhetos.Processing;
@@ -8,20 +10,22 @@ using Rhetos.Processing.DefaultCommands;
 [AllowAnonymous]
 public class DemoController : ControllerBase
 {
-    private readonly IProcessingEngine processingEngine;
-    private readonly IUnitOfWork unitOfWork;
+    private readonly IProcessingEngine _processingEngine;
+    private readonly IUnitOfWork _unitOfWork;
+    private readonly Common.ExecutionContext _executionContext;
 
-    public DemoController(IRhetosComponent<IProcessingEngine> processingEngine, IRhetosComponent<IUnitOfWork> unitOfWork)
+    public DemoController(IRhetosComponent<IProcessingEngine> processingEngine, IRhetosComponent<IUnitOfWork> unitOfWork, IRhetosComponent<Common.ExecutionContext> executionContext)
     {
-        this.processingEngine = processingEngine.Value;
-        this.unitOfWork = unitOfWork.Value;
+        this._processingEngine = processingEngine.Value;
+        this._unitOfWork = unitOfWork.Value;
+        this._executionContext = executionContext.Value;
     }
 
     [HttpGet]
     public string ReadBooks()
     {
         var readCommandInfo = new ReadCommandInfo { DataSource = "Bookstore.Book", ReadTotalCount = true };
-        var result = processingEngine.Execute(readCommandInfo);
+        var result = _processingEngine.Execute(readCommandInfo);
         return $"{result.TotalCount} books.";
     }
 
@@ -30,8 +34,40 @@ public class DemoController : ControllerBase
     {
         var newBook = new Bookstore.Book { Title = "NewBook" };
         var saveCommandInfo = new SaveEntityCommandInfo { Entity = "Bookstore.Book", DataToInsert = new[] { newBook } };
-        processingEngine.Execute(saveCommandInfo);
-        unitOfWork.CommitAndClose(); // Commits and closes database transaction.
+        _processingEngine.Execute(saveCommandInfo);
+        _unitOfWork.CommitAndClose(); // Commits and closes database transaction.
         return "1 book inserted.";
+    }
+
+    [HttpGet]
+    public Bookstore.BookInfo GetBooks()
+    {
+        var repo = _executionContext.Repository.Bookstore.BookInfo.Query().OrderByDescending(x => x.NumberOfComments).FirstOrDefault();
+        if (repo != null)
+        {
+            return new()
+            {
+                ID = repo.ID,
+                NumberOfComments = repo.NumberOfComments,
+            };
+        }
+        return null;
+    }
+
+    [HttpGet]
+    [Route("{id}")]
+    public Bookstore.BookInfo GetBooks(string id)
+    {
+        var guid = Guid.Parse(id);
+        var repo = _executionContext.Repository.Bookstore.BookInfo.Query().Where(x => x.Base.ID.Equals(guid)).FirstOrDefault();
+        if (repo != null)
+        {
+            return new()
+            {
+                ID = repo.ID,
+                NumberOfComments = repo.NumberOfComments,
+            };
+        }
+        return null;
     }
 }
