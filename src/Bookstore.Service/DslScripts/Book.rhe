@@ -31,7 +31,7 @@
 
         Integer AgeFrom;
         Integer AgeTo;
-        IntegerRange AgeFrom AgeTo; // A simple validation.
+        IntegerRange AgeFrom AgeTo;
     }
 
     Entity ForeignBook

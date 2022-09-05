@@ -12,7 +12,7 @@ builder.Services.AddControllers()
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("rhetos", new OpenApiInfo { Title = "Rhetos REST API", Version = "v1" });
+    c.SwaggerDoc("rest", new OpenApiInfo { Title = "Rhetos REST API", Version = "v1" });
 });
 
 builder.Services
@@ -26,8 +26,8 @@ builder.Services
     })
     .AddRestApi(o =>
     {
-        o.BaseRoute = "rhetos";
-        o.GroupNameMapper = (conceptInfo, controller, oldName) => "rhetos";
+        o.BaseRoute = "rest";
+        o.GroupNameMapper = (conceptInfo, controller, oldName) => "rest";
     })
     .AddDashboard()
     .AddAspNetCoreIdentityUser()
@@ -41,10 +41,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI(c =>
     {
-        c.SwaggerEndpoint("/swagger/rhetos/swagger.json", "Rhetos REST API");
+        c.SwaggerEndpoint("/swagger/rest/swagger.json", "Rhetos REST API");
     });
+    //app.MapRhetosDashboard("dash");
 }
-
+app.UseRhetosRestApi();
 app.UseAuthorization();
 
 app.MapControllers();
