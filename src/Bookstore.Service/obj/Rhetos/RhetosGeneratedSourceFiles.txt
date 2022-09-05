@@ -1,9 +1,0 @@
-C:\Users\IgorBedek\Workspace\Omega\Bookstore\src\Bookstore.Service\obj\Rhetos\Source\EntityFrameworkContext.cs
-C:\Users\IgorBedek\Workspace\Omega\Bookstore\src\Bookstore.Service\obj\Rhetos\Source\Model\BookstoreModel.cs
-C:\Users\IgorBedek\Workspace\Omega\Bookstore\src\Bookstore.Service\obj\Rhetos\Source\Model\CommonModel.cs
-C:\Users\IgorBedek\Workspace\Omega\Bookstore\src\Bookstore.Service\obj\Rhetos\Source\Model\QueryExtensions.cs
-C:\Users\IgorBedek\Workspace\Omega\Bookstore\src\Bookstore.Service\obj\Rhetos\Source\PersistenceStorageMapper.cs
-C:\Users\IgorBedek\Workspace\Omega\Bookstore\src\Bookstore.Service\obj\Rhetos\Source\Repositories.cs
-C:\Users\IgorBedek\Workspace\Omega\Bookstore\src\Bookstore.Service\obj\Rhetos\Source\Repositories\BookstoreRepositories.cs
-C:\Users\IgorBedek\Workspace\Omega\Bookstore\src\Bookstore.Service\obj\Rhetos\Source\Repositories\CommonRepositories.cs
-C:\Users\IgorBedek\Workspace\Omega\Bookstore\src\Bookstore.Service\obj\Rhetos\Source\RhetosHostBuilderAppConfiguration.cs
