@@ -1,7 +1,9 @@
 using Microsoft.OpenApi.Models;
+using NLog.Web;
 using Rhetos;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Host.UseNLog();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 //builder.Services.AddEndpointsApiExplorer();
@@ -29,15 +31,16 @@ builder.Services
     })
     .AddAspNetCoreIdentityUser()
     .AddHostLogging()
-    //.AddDashboard()
+    .AddDashboard()
     .AddRestApi(o =>
     {
-        o.BaseRoute = "rest";
+        o.BaseRoute = "rest";        
         o.GroupNameMapper = (conceptInfo, controller, oldName) => "rhetos";
     })
     ;
 
 var app = builder.Build();
+app.UseRhetosRestApi();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -48,11 +51,20 @@ if (app.Environment.IsDevelopment())
         c.SwaggerEndpoint("/swagger/rhetos/swagger.json", "Rhetos REST API");
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "TestApp v1");
     });
-   // app.MapRhetosDashboard("dash");
+    app.MapRhetosDashboard("dash");
 }
-app.MapControllers();
-app.UseRhetosRestApi();
+app.UseRouting();
+
+
 //app.UseAuthorization();
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+    if (app.Environment.IsDevelopment())
+    {
+        endpoints.MapRhetosDashboard();
+    }
+});
 
 
 app.Run();

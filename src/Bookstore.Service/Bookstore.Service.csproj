@@ -9,6 +9,8 @@
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.1" />
+		<PackageReference Include="NLog" Version="4.7.15" />
+		<PackageReference Include="NLog.Web.AspNetCore" Version="4.7.15" />
 		<PackageReference Include="Rhetos.CommonConcepts" Version="5.2.0" />
 		<PackageReference Include="Rhetos.Host.AspNet" Version="5.2.0" />
 		<PackageReference Include="Rhetos.Host" Version="5.2.0" />
