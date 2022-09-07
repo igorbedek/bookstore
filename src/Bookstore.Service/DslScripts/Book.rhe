@@ -9,11 +9,39 @@
         ItemFilter CommonMisspelling 'book => book.Title.Contains("curiousity")';
         InvalidData CommonMisspelling 'It is not allowed to enter misspelled word "curiousity".';
 
+        ItemFilter LongBooks 'item => item.NumberOfPages >= 5000';
+        ComposableFilterBy LongBooks2 '(query, repository, parameter) =>
+            {
+                return query.Where(item => item.NumberOfPages >= 5000);
+            }';
+            ComposableFilterBy LongBooks3 '(query, repository, parameter) =>
+            {
+                var filtered = query.Where(item => item.NumberOfPages >= parameter.MinimumPages);
+                if (parameter.ForeignBooksOnly == true)
+                    filtered = filtered.Where(item => item.Extension_ForeignBook.ID != null);
+                return filtered;
+            }';
+
         Reference Author Bookstore.Person;
         Reference Genre Bookstore.Genre;
 
+        ItemFilter ForeignAuthorXWithComments 'item =>
+            item.Author.Name.StartsWith("X")
+            && item.Extension_ForeignBook.ID != null
+            && _domRepository.Bookstore.Comment.Subquery.Where(c => c.BookID == item.ID).Count() >= 3';
        // Logging;
+      
     }
+    Parameter LongBooks2
+        {
+           
+        }
+
+     Parameter LongBooks3
+        {
+            Integer MinimumPages;
+            Bool ForeignBooksOnly;
+        }
 
     Entity Person
     {
@@ -71,6 +99,14 @@
 
         AutodetectSqlDependencies;
     }
+
+    SqlObject BooksView 
+        "CREATE VIEW Bookstore.V_Books as select b.ID, b.Title, a.Name Author from Bookstore.Book b join Bookstore.Person a on b.AuthorID = a.ID"
+        "drop view Bookstore.V_Books"
+     {
+         SqlDependsOn Bookstore.Book;
+         SqlDependsOn Bookstore.Person;
+     }
 
     Hardcoded Genre
     {
