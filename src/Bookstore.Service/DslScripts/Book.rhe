@@ -12,7 +12,7 @@
         Reference Author Bookstore.Person;
         Reference Genre Bookstore.Genre;
 
-        Logging;
+       // Logging;
     }
 
     Entity Person
@@ -91,5 +91,15 @@
             Value Description 'A written narrative of a person''s life.';
             Value IsFiction 0;
         }
+    }
+
+    Action InsertRandomAuthors '(parameter, repository, userInfo) => Bookstore.Service.External.RandomDataGenerator.InsertAuthors(repository, parameter.NumberOfAuthors)'
+    {
+        Integer NumberOfAuthors;
+    }
+
+    Action InsertRandomBooks '(parameter, repository, userInfo) => Bookstore.Service.External.RandomDataGenerator.InsertBooks(repository, parameter.NumberOfBooks)' 
+    {
+        Integer NumberOfBooks;
     }
 }

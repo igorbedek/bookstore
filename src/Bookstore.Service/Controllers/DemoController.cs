@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Rhetos;
 using Rhetos.Processing;
 using Rhetos.Processing.DefaultCommands;
+using System.Data.Entity;
 
 [Route("Demo/[action]")]
 [AllowAnonymous]
@@ -56,13 +57,13 @@ public class DemoController : ControllerBase
 
     [HttpGet]
     [Route("{id}")]
-    public Bookstore.BookInfo GetBooks(string id)
+    public async Task<Bookstore.BookInfo> GetBooks(string id)
     {
         var guid = Guid.Parse(id);
-        var repo = _executionContext.Repository.Bookstore.BookInfo.Query().Where(x => x.Base.ID.Equals(guid)).FirstOrDefault();
+        var repo = await _executionContext.Repository.Bookstore.BookInfo.Query().Where(x => x.Base.ID.Equals(guid)).FirstOrDefaultAsync();
         if (repo != null)
         {
-            return new()
+            return new() 
             {
                 ID = repo.ID,
                 NumberOfComments = repo.NumberOfComments,
