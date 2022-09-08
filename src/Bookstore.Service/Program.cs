@@ -1,6 +1,12 @@
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using Common;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using NLog.Web;
 using Rhetos;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseNLog();
@@ -17,9 +23,17 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddControllers()
     .AddJsonOptions(options => {
         options.JsonSerializerOptions.PropertyNamingPolicy = null;
-        options.JsonSerializerOptions.MaxDepth = 2;
+       // options.JsonSerializerOptions.MaxDepth = 2;
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
         })
     ;
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(o => o.Events.OnRedirectToLogin = context =>
+    {
+        context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+        return Task.CompletedTask;
+    });
 
 builder.Services
     .AddRhetosHost((serviceProvider, rhetosHostBuilder) =>
@@ -27,7 +41,10 @@ builder.Services
         rhetosHostBuilder
             .ConfigureRhetosAppDefaults()
             .UseBuilderLogProviderFromHost(serviceProvider)            
-            .ConfigureConfiguration(cfg => cfg.MapNetCoreConfiguration(builder.Configuration));
+            .ConfigureConfiguration(cfg =>
+            {                
+                cfg.MapNetCoreConfiguration(builder.Configuration);
+            });
     })
     .AddAspNetCoreIdentityUser()
     .AddHostLogging()
@@ -66,7 +83,8 @@ app.UseEndpoints(endpoints =>
     }
 });
 
-
+app.UseAuthentication();
+app.UseAuthorization();
 app.Run();
 
 
