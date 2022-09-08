@@ -34,7 +34,16 @@
             && _domRepository.Bookstore.Comment.Subquery.Where(c => c.BookID == item.ID).Count() >= 3';
        // Logging;
 
-       
+       Reference AssignedTo Bookstore.Employee; // Only the assigned person should be allowed to edit the book data.
+
+    RowPermissions
+    {        
+        AllowRead EveryoneCanRead 'context => book => true';        
+        AllowWrite OwnerCanWrite 'context =>
+            {
+                return book => book.AssignedTo.UserName == context.UserInfo.UserName;
+            }';
+    }
       
     }
     Parameter LongBooks2

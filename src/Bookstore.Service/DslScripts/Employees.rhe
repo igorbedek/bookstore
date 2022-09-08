@@ -6,6 +6,7 @@
         ShortString VatNumber { Unique; }
         ShortString LastName { Required; }
         ShortString FirstName { Required; }
+        ShortString UserName { Required; }
         ShortString Code { RegExMatch "\d{7,10}" "Code must have 7 to 10 digits."; }
         DateTime WorkStarted { Required; }
         DateTime WorkFinished;
