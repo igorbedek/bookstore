@@ -8,7 +8,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Autofac.Extensions.DependencyInjection" Version="8.0.0" />
 		<PackageReference Include="Bogus" Version="34.0.2" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.8" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.8" />
 		<PackageReference Include="WaffleGenerator.Bogus" Version="4.2.1" />
 		<PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.1" />
 		<PackageReference Include="NLog" Version="4.7.15" />
@@ -20,6 +23,10 @@
 		<PackageReference Include="Rhetos.MSBuild" Version="5.2.0" />
 		<PackageReference Include="Rhetos.RestGenerator" Version="5.0.0" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Bookstore.Extensions\Bookstore.Extensions.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

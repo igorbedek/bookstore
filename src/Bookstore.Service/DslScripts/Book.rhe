@@ -2,6 +2,7 @@
 {
     Entity Book
     {
+        Auditable;
         ShortString Code { AutoCode; }
         ShortString Title;
         Integer NumberOfPages;
@@ -25,11 +26,15 @@
         Reference Author Bookstore.Person;
         Reference Genre Bookstore.Genre;
 
+       
+
         ItemFilter ForeignAuthorXWithComments 'item =>
             item.Author.Name.StartsWith("X")
             && item.Extension_ForeignBook.ID != null
             && _domRepository.Bookstore.Comment.Subquery.Where(c => c.BookID == item.ID).Count() >= 3';
        // Logging;
+
+       
       
     }
     Parameter LongBooks2

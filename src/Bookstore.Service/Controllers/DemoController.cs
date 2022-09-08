@@ -1,4 +1,5 @@
 ﻿using Bookstore.Repositories;
+using Common;
 using Common.Queryable;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -70,5 +71,37 @@ public class DemoController : ControllerBase
             };
         }
         return null;
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetCustomBooks(int page = 1, int pageSize = 20
+        )
+    {
+        var totalBookCount = await _executionContext.EntityFrameworkContext.Bookstore_Book.CountAsync();
+
+        var books = await _executionContext.EntityFrameworkContext
+            .Bookstore_Book
+            .Include(x => x.Author)
+            .Include(x => x.Genre)
+            .Select(x => new
+            {
+                ID = x.ID,
+                Title = x.Title,
+                Author = x.Author.Name,
+                Genre = x.Genre.Name,
+                NumberOfPages = x.NumberOfPages,
+            })
+            .OrderBy(x => x.ID)
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+
+        return Ok(new
+        {
+            Page = page,
+            PageSize = pageSize,
+            TotalResultCount = totalBookCount,
+            Results = books
+        });
     }
 }
