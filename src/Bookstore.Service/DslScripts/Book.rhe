@@ -24,17 +24,14 @@
             }';
 
         Reference Author Bookstore.Person;
-        Reference Genre Bookstore.Genre;
-
-       
+        Reference Genre Bookstore.Genre;       
 
         ItemFilter ForeignAuthorXWithComments 'item =>
             item.Author.Name.StartsWith("X")
             && item.Extension_ForeignBook.ID != null
             && _domRepository.Bookstore.Comment.Subquery.Where(c => c.BookID == item.ID).Count() >= 3';
-       // Logging;
 
-       Reference AssignedTo Bookstore.Employee; // Only the assigned person should be allowed to edit the book data.
+       Reference AssignedTo Bookstore.Employee;
 
     RowPermissions
     {        
@@ -124,7 +121,7 @@
 
     Hardcoded Genre
     {
-        ShortString Label; // Short text displayed to user.
+        ShortString Label;
         LongString Description;
         Bool IsFiction;
 
