@@ -1,12 +1,11 @@
-﻿using Bookstore.Repositories;
-using Common;
-using Common.Queryable;
+﻿using Bookstore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Rhetos;
 using Rhetos.Processing;
 using Rhetos.Processing.DefaultCommands;
 using System.Data.Entity;
+using System.Linq;
 
 [Route("Demo/[action]")]
 [AllowAnonymous]
@@ -64,7 +63,7 @@ public class DemoController : ControllerBase
         var repo = await _executionContext.Repository.Bookstore.BookInfo.Query().Where(x => x.Base.ID.Equals(guid)).FirstOrDefaultAsync();
         if (repo != null)
         {
-            return new() 
+            return new()
             {
                 ID = repo.ID,
                 NumberOfComments = repo.NumberOfComments,
@@ -103,5 +102,78 @@ public class DemoController : ControllerBase
             TotalResultCount = totalBookCount,
             Results = books
         });
+    }
+
+    [HttpGet]
+    [Route("expected-ratings-better")]
+    public async Task<ActionResult<RecordsAndTotalCountResult<Ratings>>> GetExpectedRatings([FromQuery] RequestBaseModel request, CancellationToken cancellationToken)
+    {
+        var totalBookCount = await _executionContext.EntityFrameworkContext.Bookstore_Book.CountAsync(cancellationToken);
+        var books = _executionContext.EntityFrameworkContext.Bookstore_Book
+            .Include(x => x.Extension_ForeignBook)
+            .Select(x => new Ratings
+            {
+                ID = x.ID.ToString(),
+                Rating = x.Title.IndexOf("Super") >= 0 ? 100 : x.Title.IndexOf("Great") >= 0 ? 50 : x.Extension_ForeignBook != null ? 1.2m : 0,
+                Title = x.Title,
+            })
+            .OrderByDescending(x => x.Rating)
+            .Skip((request.skip.HasValue ? (int)request.skip.Value : (request.page.Value -1) * request.psize.Value))
+            .Take(request.psize.Value)
+            .ToListAsync(cancellationToken);
+
+        return Ok(new
+        {
+            Result = books,
+            Value = totalBookCount
+        });
+    }
+
+    private static decimal GetBookRating(string title, bool isForeign)
+    {
+        decimal rating = 0;
+
+        if (title.IndexOf("Super") >= 0)
+        {
+            rating += 100;
+        }
+
+        if (title.IndexOf("Great") >= 0)
+        {
+            rating += 50;
+        }
+
+        if (isForeign)
+        {
+            rating *= 1.2m;
+        }
+
+        return rating;
+    }
+    public class RecordsAndTotalCountResult<T>
+    {
+        public T[] Records { get; set; }
+
+        public int TotalCount { get; set; }
+    }
+
+    public class Ratings
+    {
+        public string Title { get; set; } = default!;
+        public decimal? Rating { get; set; }
+        public string ID { get; set; } = default!;
+    }
+
+    public record RequestBaseModel
+    {
+        public string? filter { get; init; } = default;
+        public string? fparam { get; init; } = default;
+        public string? genericfilter { get; init; } = default;
+        public string? filters { get; init; } = default;
+        public int? top { get; init; }
+        public int? skip { get; init; }
+        public int? page { get; init; } = 1;
+        public int? psize { get; init; } = 50;
+        public string sort { get; init; } = default;
     }
 }

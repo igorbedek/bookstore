@@ -3,12 +3,18 @@ using Autofac.Extensions.DependencyInjection;
 using Common;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using NLog.Web;
 using Rhetos;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
+//builder.Host.ConfigureLogging(cfg =>
+//{
+//    cfg.AddConsole();
+//    cfg.AddDebug();
+//});
 builder.Host.UseNLog();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -57,6 +63,8 @@ builder.Services
     ;
 
 var app = builder.Build();
+app.AddNLogWeb();
+
 app.UseRhetosRestApi();
 
 // Configure the HTTP request pipeline.
